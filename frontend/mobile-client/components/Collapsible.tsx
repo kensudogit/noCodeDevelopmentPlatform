@@ -7,8 +7,11 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+// 折りたたみ可能なコンポーネントを定義します。
 export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
+  // 折りたたみ状態を管理するためのフックを使用します。
   const [isOpen, setIsOpen] = useState(false);
+  // 現在のカラースキームを取得します。
   const theme = useColorScheme() ?? 'light';
 
   return (
@@ -43,3 +46,4 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
 });
+// スタイルを定義します。

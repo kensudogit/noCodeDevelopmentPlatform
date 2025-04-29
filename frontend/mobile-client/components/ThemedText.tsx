@@ -1,13 +1,21 @@
+// テキストコンポーネントとスタイルシートをインポート
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
+// useThemeColorフックをインポート
 import { useThemeColor } from '@/hooks/useThemeColor';
 
+// ThemedTextコンポーネントは、テーマに応じた色を持つテキストを表示します。
+// lightColorとdarkColorを指定することで、テーマに応じた色を設定できます。
+// typeプロパティでテキストのスタイルを指定できます。
+
+// ThemedTextコンポーネントのプロパティタイプを定義
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
+// ThemedTextコンポーネントを定義
 export function ThemedText({
   style,
   lightColor,
@@ -15,8 +23,10 @@ export function ThemedText({
   type = 'default',
   ...rest
 }: ThemedTextProps) {
+  // テーマに基づいてテキストの色を取得
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
+  // スタイルを適用してTextコンポーネントを返す
   return (
     <Text
       style={[
@@ -33,6 +43,7 @@ export function ThemedText({
   );
 }
 
+// スタイルを定義
 const styles = StyleSheet.create({
   default: {
     fontSize: 16,

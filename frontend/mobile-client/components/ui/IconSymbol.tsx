@@ -1,9 +1,13 @@
-// This file is a fallback for using MaterialIcons on Android and web.
+// このファイルは、AndroidとWebでMaterialIconsを使用するためのフォールバックです。
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { SymbolWeight } from 'expo-symbols';
 import React from 'react';
 import { OpaqueColorValue, StyleProp, ViewStyle } from 'react-native';
+
+// MaterialIconsとSFSymbolsのマッピングをここに追加します。
+// MaterialIconsの詳細はこちら: https://icons.expo.fyi
+// SF Symbolsの詳細はMacのSF Symbolsアプリで確認できます。
 
 // Add your SFSymbol to MaterialIcons mappings here.
 const MAPPING = {
@@ -23,9 +27,9 @@ const MAPPING = {
 export type IconSymbolName = keyof typeof MAPPING;
 
 /**
- * An icon component that uses native SFSymbols on iOS, and MaterialIcons on Android and web. This ensures a consistent look across platforms, and optimal resource usage.
- *
- * Icon `name`s are based on SFSymbols and require manual mapping to MaterialIcons.
+ * iOSではネイティブのSFSymbolsを使用し、AndroidとWebではMaterialIconsを使用するアイコンコンポーネントです。
+ * これにより、プラットフォーム間で一貫した外観と最適なリソース使用が保証されます。
+ * アイコンの`name`はSFSymbolsに基づいており、MaterialIconsへの手動マッピングが必要です。
  */
 export function IconSymbol({
   name,

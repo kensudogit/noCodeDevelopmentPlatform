@@ -11,8 +11,10 @@ import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+// HEADER_HEIGHTはヘッダーの高さを定義
 const HEADER_HEIGHT = 250;
 
+// Propsの型定義。headerImageとheaderBackgroundColorを受け取る
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
@@ -23,10 +25,15 @@ export default function ParallaxScrollView({
   headerImage,
   headerBackgroundColor,
 }: Props) {
+  // カラースキームを取得。デフォルトは'light'
   const colorScheme = useColorScheme() ?? 'light';
+  // スクロールビューの参照を作成
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  // スクロールオフセットを取得
   const scrollOffset = useScrollViewOffset(scrollRef);
+  // ボトムタブのオーバーフローを取得
   const bottom = useBottomTabOverflow();
+  // ヘッダーのアニメーションスタイルを定義
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
