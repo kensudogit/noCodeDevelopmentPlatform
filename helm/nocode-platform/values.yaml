@@ -1,0 +1,9 @@
+replicaCount: 2
+
+frontend:
+  image: your-dockerhub/frontend:latest
+  port: 3000
+
+backend:
+  image: your-dockerhub/backend:latest
+  port: 8000

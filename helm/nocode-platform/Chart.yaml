@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nocode-platform
+description: Future NoCode SaaS Platform
+version: 0.1.0
