@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 
 export function IntegrationBuilder({ onSave }: { onSave: (integration: any) => void }) {

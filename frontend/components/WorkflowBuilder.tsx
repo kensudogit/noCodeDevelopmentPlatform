@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 
 export function WorkflowBuilder({ onSave }: { onSave: (workflow: any) => void }) {

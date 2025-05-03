@@ -29,6 +29,13 @@ export function DynamicForm({ layout, formData, setFormData, errors, setErrors }
       const error = validateField(value, field.validations);
       setErrors({ ...errors, [fieldName]: error });
     }
+    
+    if (field?.custom_script) {
+      const error = runCustomScript(field.custom_script, value);
+      if (error) {
+        setErrors({ ...errors, [fieldName]: error });
+      }
+    }
   };
 
   function runCustomScript(script: string, value: any): string | null {
@@ -37,6 +44,7 @@ export function DynamicForm({ layout, formData, setFormData, errors, setErrors }
       const func = new Function('value', script);
       return func(value);
     } catch (e) {
+      console.error("Error executing custom script:", e);
       return "カスタムスクリプトエラー";
     }
   }

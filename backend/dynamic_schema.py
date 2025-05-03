@@ -2,6 +2,7 @@
 import graphene
 from backend.db import database, dynamic_fields, dynamic_items  # DB定義を使う
 
+# フィールドタイプをマッピングする関数
 def map_field_type(type_name):
     mapping = {
         "String": graphene.String,
@@ -10,6 +11,7 @@ def map_field_type(type_name):
     }
     return mapping.get(type_name, graphene.String)
 
+# 動的スキーマを構築する非同期関数
 async def build_dynamic_schema():
     # DBからフィールドリストを取得
     fields_data = await database.fetch_all(dynamic_fields.select())
@@ -26,10 +28,11 @@ async def build_dynamic_schema():
         dynamic_fields_dict,
     )
 
-    # Query
+    # Queryクラスを定義
     class Query(graphene.ObjectType):
         items = graphene.List(DynamicItemType)
 
+        # itemsフィールドのリゾルバ
         async def resolve_items(self, info):
             records = await database.fetch_all(dynamic_items.select())
             result = []
@@ -37,23 +40,26 @@ async def build_dynamic_schema():
                 result.append(rec["data"])  # JSONBなのでそのまま返す
             return result
 
-    # Mutation（登録）
+    # Mutation（登録）クラスを定義
     class CreateItem(graphene.Mutation):
         class Arguments:
             data = graphene.JSONString(required=True)
 
         item = graphene.Field(DynamicItemType)
 
+        # mutateメソッド
         async def mutate(self, info, data):
             # 簡単なバリデーション
             allowed_fields = {field["name"] for field in fields_data}
             if not set(data.keys()).issubset(allowed_fields):
-                raise Exception("Invalid fields detected.")
+                raise ValueError("Invalid fields detected.")
 
+            # データベースにデータを挿入
             query = dynamic_items.insert().values(data=data)
-            item_id = await database.execute(query)
+            await database.execute(query)
             return CreateItem(item=data)
 
+    # Mutationクラスを定義
     class Mutation(graphene.ObjectType):
         create_item = CreateItem.Field()
 
